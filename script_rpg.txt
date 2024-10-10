@@ -1,0 +1,9 @@
+Nome (name) – Nome do personagem.
+Classe (class) – Define o tipo do personagem (ex: Guerreiro, Mago, etc.).
+Vida (health) – Quantidade de pontos de vida (HP).
+Mana (mana) – Quantidade de pontos de mana para habilidades especiais (se aplicável).
+Ataque (attack) – O valor de ataque, utilizado para calcular o dano tanto físico quanto mágico.
+Defesa (defense) – O valor de defesa, usado para reduzir o dano recebido.
+Velocidade (speed) – Influencia quem ataca primeiro e a chance de esquiva.
+Força (strength) – Aumenta o dano causado por ataques físicos.
+Inteligência (intelligence) – Aumenta o poder de habilidades mágicas.
