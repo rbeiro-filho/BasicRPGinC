@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Nome (name) – Nome do personagem.
 Classe (class) – Define o tipo do personagem (ex: Guerreiro, Mago, etc.).
 Vida (health) – Quantidade de pontos de vida (HP).
@@ -7,3 +8,31 @@ Defesa (defense) – O valor de defesa, usado para reduzir o dano recebido.
 Velocidade (speed) – Influencia quem ataca primeiro e a chance de esquiva.
 Força (strength) – Aumenta o dano causado por ataques físicos.
 Inteligência (intelligence) – Aumenta o poder de habilidades mágicas.
+=======
+Informações Básicas:
+    Nome: O nome do seu personagem.
+    Classe: A profissão ou especialização do seu personagem (guerreiro, mago, ladrão, etc.).
+
+Atributos Principais:
+    Força: Influencia em ataques físicos e carregar objetos pesados.
+    Destreza: Influencia em ataques à distância e reflexos.
+    Inteligência: Influencia em habilidades mágicas e resolução de problemas.
+
+Habilidades (opcionais):
+    Habilidades de Classe: Algumas habilidades básicas da classe, como ataques especiais ou conhecimentos específicos.
+
+Equipamento:
+    Arma: A arma principal do personagem.
+    Armadura: A proteção do personagem.
+
+Uma ficha simplificada permite:
+    Criação rápida: Menos atributos e habilidades para preencher.
+    Foco na jogabilidade: Prioriza as características mais importantes para o combate e a interação com o mundo.
+    Flexibilidade: Permite que o mestre adicione mais complexidade à medida que a aventura progride.
+
+Outras opções para simplificar:
+
+    Distribuição de pontos: Em vez de valores numéricos, os jogadores podem distribuir um número limitado de pontos entre os atributos.
+    Habilidades fixas: Cada classe pode ter um conjunto fixo de habilidades, eliminando a necessidade de escolher habilidades individuais.
+    Equipamento genérico: Em vez de listar cada item individualmente, o equipamento pode ser categorizado em níveis (básico, intermediário, avançado).
+>>>>>>> 197e8a851f8c6277d66ab73830dce5cca732d5a1
