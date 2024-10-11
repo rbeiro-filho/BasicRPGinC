@@ -1,0 +1,22 @@
+// DISTRIBUIÇÃO INICIAL DE ATRIBUTOS POR CLASSE
+
+CAVALEIRO
+Vida: 4
+Estâmina: 2
+Ataque: 3
+Defesa: 5
+Velocidade: 1
+
+ASSASSINO
+Vida: 2
+Estâmina: 3
+Ataque: 5
+Defesa: 2
+Velocidade: 4
+
+ARQUEIRO
+Vida: 2
+Estâmina: 3
+Ataque: 3
+Defesa: 1
+Velocidade: 5
