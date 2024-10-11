@@ -1,29 +1,79 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-//Character structure
-typedef struct Character{
-    char name[50];
-    char class[20];
-    int health;
-    int mana;
-    int attack;
-    int defense;
-    int speed;
-    int strength;
-    int intelligence;
-} Character;
+// CODE STRUCTURES
 
-// Functions preview
+typedef struct Character{
+    char name[20];
+    int class;             
+    int health;
+    int stamina;           
+    int attack;              
+    int defense;            
+    int speed;    
+} Character;
+// --------------------------------------------------------------
+// VISUAL FUNCTIONS PREVIEW
+
 void Menu(void);
 void ClearScreen(void);
 void PauseScreen(void);
-Character CreateCharacter(void);
-// ...
+// --------------------------------------------------------------
+// USUAL FUNCTIONS PREVIEW
 
+void Knight(Character* P) {
+    P->class = 1;
+    P->level;              
+    P->health;
+    P->stamina;             
+    P->mana;               
+    P->attack;              
+    P->defense;            
+    P->speed;              
+    P->strength;           
+    P->intelligence;
+}
+void Rogue(Character* P) {
+
+}
+void Archer(Character* P) {
+
+}
+void Wizard(Character* P) {
+
+}
 // --------------------------------------------------------------
 
+
 int main(void) {
+    int select;
+
+    do{
+        switch(select){
+            case 1:{
+
+                break;
+            }
+            case 2:{
+
+                break;
+            }
+            case 3:{
+
+                break;
+            }
+            case 0:{
+
+                break;
+            }
+            default:{
+
+                break;
+            }
+        }
+        ClearScreen();
+        PauseScreen();
+    }while(select != 0);
 
     return 0;
 }
@@ -34,6 +84,7 @@ int main(void) {
 void Menu(void) {
 
 }
+// 
 // Clear terminal
 void ClearScreen(void) {
     system("cls");
@@ -43,7 +94,4 @@ void PauseScreen(void) {
     getchar();
     getchar();
 }
-// Returns a structure with character's info
-Character CreateCharacter(void) {
-    
-};
+// 
