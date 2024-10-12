@@ -1,14 +1,15 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<windows.h>
-#include<string.h>
-
+#include<conio.h>
+#include<ctype.h>
+#include<unistd.h>
+#include<time.h>
 
 // CODE STRUCTURES
 
 typedef struct Character{
     char name[20];
-    char class[10];             
+    int class;             
     int health;
     int stamina;           
     int attack;              
@@ -18,7 +19,12 @@ typedef struct Character{
 // --------------------------------------------------------------
 // VISUAL FUNCTIONS PREVIEW
 
+void NameScreen(void);
 void Menu(void);
+void MainScreen(void);
+void KMS(void);
+void SMS(void);
+void AMS(void);
 void ClearScreen(void);
 void PauseScreen(void);
 // --------------------------------------------------------------
@@ -27,138 +33,136 @@ void PauseScreen(void);
 void Knight(Character* P);
 void Assassin(Character* P);
 void Archer(Character* P);
-// --------------------------------------------------------------
-
-void TelaInicial(void) {
-    printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
-    printf("| Knight               0         | Assassino            0         | Archer               0         |\n" );
-    printf("|                   O/ | \\!      |                   i/ | \\i      |                    / | \\D      |\n" );
-    printf("| Vida                / \\     10 | Vida                / \\      6 | Vida                / \\      6 |\n" );
-    printf("| Estamina                     5 | Estamina                     8 | Estamina                     5 |\n" );
-    printf("| Ataque                       3 | Ataque                       5 | Ataque                       3 |\n" );
-    printf("| Defesa                       5 | Defesa                       2 | Defesa                       1 |\n" );
-    printf("| Velocidade                   1 | Velocidade                   4 | Velocidade                   5 |\n" );
-    printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
-    printf("| Digete 1 para escolher Knight  | Digete 2 para escolher o Rogue | Digete 3 para escolher o Archer|\n" );
-
-}
-
-void TelaDeCombate(struct Character* P) {
-
-    char ataque[10];
-    char defesa[10];
-    char habilidade[20];
-    char boneco[10];
-
-    if(strcmp(P->class, "Knight") == 0){
-        strcpy(ataque, "Espada");
-        strcpy(defesa, "Escudo");
-        strcpy(habilidade, "Golpe de escudo");
-        strcpy(boneco, "O/ | \\!");
-    }else if(strcmp(P->class, "Assassino") == 0){
-        strcpy(ataque, "Adaga");
-        strcpy(defesa, "Esquiva");
-        strcpy(habilidade, "Veneno");
-        strcpy(boneco, "i/ | \\i");
-    }else if(strcmp(P->class, "Archer") == 0){
-        strcpy(ataque, "Arco");
-        strcpy(defesa, "Flecha");
-        strcpy(habilidade, "Tiro rapido");
-        strcpy(boneco, " / | \\D");
-    }
-    printf("|----------------------------------------------------------------|\n" );
-    printf("| HP %3d                                      HP %3d             |\n", P->health, 100);
-    printf("|                                                                |\n" );
-    printf("|                                                                |\n" );
-    printf("|                                                                |\n" );
-    printf("|     0                                                          |\n" );
-    printf("|  %s                                                       |\n", boneco);
-    printf("|    / \\                                                         |\n" );
-    printf("|                                                                |\n" );
-    printf("|----------------------------------------------------------------|\n" );
-    printf("| Digite 1 para %-15s                                  |\n", ataque);
-    printf("| Digite 2 para %-15s                                  |\n", defesa);
-    printf("| Digite 3 para %-15s                                  |\n", habilidade);
-    printf("|----------------------------------------------------------------|\n" );
-
-
-    
-}
-    
+// --------------------------------------------------------------  
 
 int main(void) {
-    char select;
-    int n = 0;
-    Character P;
-    int acao;
-    char modo[20] = "TelaInicial";
+    char select = 'Z';
+    Character C;
+    C.class = -1;
 
+    // Choose the player name
+    do{
+        NameScreen();
+        scanf(" %19[^\n]", C.name);
+        printf("\n\t\t\t\t\t    Are you sure? [Y/N] ");
+        select = toupper(getch()); fflush(stdin);
+        ClearScreen();
+    }while(select != 'Y');
+    // Entering Forgotten Land
+    Menu();
+    sleep(5);
+    // Class selection
     do{
         ClearScreen();
-        if(strcmp(modo, "TelaInicial") == 0){
-            printf("\t\t\t\t\tBem vindo ao RPG\n");
-            printf("\n");
-            TelaInicial();
-            printf("\nEscolha seu personagem: ");
-            scanf("%c", &select); fflush(stdin);
-
-            
-
-            switch(select){
-                case '1':
-                    Knight(&P);
-                    printf("Voce escolheu Knight\n");
-                    break;
-                case '2':
-                    Assassin(&P);
-                    printf("Voce escolheu Assasino\n");
-                    break;
-                case '3':
-                    Archer(&P);
-                    printf("Voce escolheu Archer\n");
-                    break;
-                default:
-                    printf("Opcao invalida\n");
-                    PauseScreen();
-
-                    continue;
-                    break;
-            }
-        }else if(strcmp(modo, "Combate") == 0){
-            ClearScreen();
-            printf("\t\t\t   Combate\n");
-            printf("|%-10s                                               %s|\n", P.class, "Inimigo");
-            TelaDeCombate(&P);
-            printf("Escolha sua acao: ");
-            scanf("%d", &acao ); fflush(stdin);
-            PauseScreen();
+        MainScreen();
+        select = getch(); fflush(stdin);
+        ClearScreen();
+        switch(toupper(select)){
+            case 'K':
+                Knight(&C);
+                KMS();
+                printf("\n\t\t\t\t\tYou've choosen Knight\n");
+                break;
+            case 'S':
+                Assassin(&C);
+                SMS();
+                printf("\n\t\t\t\t\tYou've choosen Assassin\n");
+                break;
+            case 'A':
+                Archer(&C);
+                AMS();
+                printf("\n\t\t\t\t\tYou've choosen Archer\n");
+                break;
+            default:
+                printf("\n\t\t\t\t\tNot a valid option\n");
+                break;
         }
-             
-
-
-
-
-    }while(n != 1);
+        PauseScreen();
+    }while(C.class == -1);
 
     return 0;
 }
 // --------------------------------------------------------------
 // VISUAL FUNCTIONS PREVIEW
 
-// Limpa a tela
+// Name screen
+void NameScreen(void) {
+    printf("\t\t\t\t\t\tYou bastard!!!\n");
+    printf("\t\t\tYou must identify yourself before you entering this land\n\n\t\t\t\t\t\t");
+}
+// Game menu
+void Menu(void) {
+    printf("\t\t\t\t\tWelcome to Forgotten Land\n\n");
+    printf("\t\t\t\t   The fate of this land depends on you\n");
+    printf("\t\t\t\t    We wish you lucky! You'll need it!\n");
+}
+// Prints the home screen
+void MainScreen(void) {
+    printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
+    printf("| Knight               0         | Assassin             0         | Archer               0         |\n" );
+    printf("|                   U/ | \\P      |                   i/ | \\i      |                   |/ | \\D      |\n" );
+    printf("| Health              / \\     65 | Health              / \\     35 | Health              / \\     35 |\n" );
+    printf("| Stamina                     35 | Stamina                     50 | Stamina                     50 |\n" );
+    printf("| Attack                      50 | Attack                      80 | Attack                      50 |\n" );
+    printf("| Defense                     80 | Defense                     35 | Defense                     20 |\n" );
+    printf("| Speed                       20 | Speed                       65 | Speed                       80 |\n" );
+    printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
+    printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
+}
+// Prints the Knight choosen home screen 
+void KMS(void) {
+    printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
+    printf("| Knight               0 /P      | Assassin             0         | Archer               0         |\n" );
+    printf("|                   U/ |         |                   i/ | \\i      |                   |/ | \\D      |\n" );
+    printf("| Health              / \\     65 | Health              / \\     35 | Health              / \\     35 |\n" );
+    printf("| Stamina                     35 | Stamina                     50 | Stamina                     50 |\n" );
+    printf("| Attack                      50 | Attack                      80 | Attack                      50 |\n" );
+    printf("| Defense                     80 | Defense                     35 | Defense                     20 |\n" );
+    printf("| Speed                       20 | Speed                       65 | Speed                       80 |\n" );
+    printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
+    printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
+}
+// Prints the Assassin choosen home screen
+void SMS(void) {
+    printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
+    printf("| Knight               0         | Assassin             0 /i      | Archer               0         |\n" );
+    printf("|                   U/ | \\P      |                   i/ |         |                   |/ | \\D      |\n" );
+    printf("| Health              / \\     65 | Health              / \\     35 | Health              / \\     35 |\n" );
+    printf("| Stamina                     35 | Stamina                     50 | Stamina                     50 |\n" );
+    printf("| Attack                      50 | Attack                      80 | Attack                      50 |\n" );
+    printf("| Defense                     80 | Defense                     35 | Defense                     20 |\n" );
+    printf("| Speed                       20 | Speed                       65 | Speed                       80 |\n" );
+    printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
+    printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
+}
+// Prints the Archer choosen home screen
+void AMS(void) {
+    printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
+    printf("| Knight               0         | Assassin             0         | Archer               0 /D      |\n" );
+    printf("|                   U/ | \\P      |                   i/ | \\i      |                   |/ |         |\n" );
+    printf("| Health              / \\     65 | Health              / \\     35 | Health              / \\     35 |\n" );
+    printf("| Stamina                     35 | Stamina                     50 | Stamina                     50 |\n" );
+    printf("| Attack                      50 | Attack                      80 | Attack                      50 |\n" );
+    printf("| Defense                     80 | Defense                     35 | Defense                     20 |\n" );
+    printf("| Speed                       20 | Speed                       65 | Speed                       80 |\n" );
+    printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
+    printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
+}
+// Clear terminal
 void ClearScreen(void) {
     system("cls");
 }
-// Pausa a tela
+// Pause terminal
 void PauseScreen(void) {
-    system("pause");
+    printf("Press any key to continue...");
+    getchar();
 }
 // --------------------------------------------------------------
 // USUAL FUNCTIONS PREVIEW
 
 // Gives the knight attributes
 void Knight(Character* P) {
-    strcpy(P->class, "Knight");
+    P->class = 1;
     P->health = 65;
     P->stamina = 35;
     P->attack = 50;
@@ -167,7 +171,7 @@ void Knight(Character* P) {
 }
 // Gives the assassin attributes
 void Assassin(Character* P) {
-    strcpy(P->class, "Assassino");
+    P->class = 2;
     P->health = 35;
     P->stamina = 50;
     P->attack = 80;
@@ -176,10 +180,17 @@ void Assassin(Character* P) {
 }
 // Gives the archer attributes
 void Archer(Character* P) {
-    strcpy(P->class, "Archer");
+    P->class = 3;
     P->health = 35;
     P->stamina = 50;
     P->attack = 50;
     P->defense = 20;
     P->speed = 80;
+}
+// Returns a value (min <= value <= max)
+int Dice(int min, int max) {
+    int random_number;
+    // Starts the seed using the clock
+    srand(time(NULL));
+    return random_number = (rand() % (max - min + 1)) + min;
 }
