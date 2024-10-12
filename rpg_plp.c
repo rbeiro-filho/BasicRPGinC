@@ -7,7 +7,7 @@
 
 typedef struct Character{
     char name[20];
-    int class;             
+    char class[10];             
     int health;
     int stamina;           
     int attack;              
@@ -41,6 +41,45 @@ void TelaInicial(void) {
     printf("| Digete 1 para escolher Knight  | Digete 2 para escolher o Rogue | Digete 3 para escolher o Archer|\n" );
 
 }
+
+void TelaDeCombate(struct Character* P) {
+
+    char ataque[10];
+    char defesa[10];
+    char habilidade[10];
+
+    if(P->class == 1){
+        strcpy(ataque, "Espada");
+        strcpy(defesa, "Escudo");
+        strcpy(habilidade, "Golpe de escudo");
+    }else if(P->class == 2){
+        strcpy(ataque, "Adaga");
+        strcpy(defesa, "Esquiva");
+        strcpy(habilidade, "Veneno");
+    }else if(P->class == 3){
+        strcpy(ataque, "Arco");
+        strcpy(defesa, "Flecha");
+        strcpy(habilidade, "Tiro rapido");
+    }
+    printf("|----------------------------------------------------------------|\n" );
+    printf("| HP                                          HP                 |\n" );
+    printf("|                                                                |\n" );
+    printf("|                                                                |\n" );
+    printf("|                                                                |\n" );
+    printf("|                                                                |\n" );
+    printf("|                                                                |\n" );
+    printf("|                                                                |\n" );
+    printf("|                                                                |\n" );
+    printf("|----------------------------------------------------------------|\n" );
+    printf("| Digite 1 para atacar                                           |\n" );
+    printf("| Digite 2 para defender                                         |\n" );
+    printf("| Digite 3 para usar habilidade                                  |\n" );
+    printf("|----------------------------------------------------------------|\n" );
+
+    
+
+    
+}
     
 
 int main(void) {
@@ -64,7 +103,7 @@ int main(void) {
                 break;
             case '2':
                 Rogue(&P);
-                printf("Voce escolheu Rogue\n");
+                printf("Voce escolheu Assasino\n");
                 break;
             case '3':
                 Archer(&P);
@@ -78,7 +117,16 @@ int main(void) {
                 break;
         }
 
+        // Combate
+        ClearScreen();
+        printf("\t\t\t   Combate\n");
+        printf("|                                                         %s|\n", P.class, "Inimigo");
+        TelaDeCombate(&P);
+        PauseScreen();
+        
+
         n = 1;
+
     }while(n != 1);
 
     return 0;
