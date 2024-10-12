@@ -1,0 +1,23 @@
+Tela Inicial - 
+
+Escolher entre os personagens
+info sobre cada personagens
+    - status
+    - arma?
+    - ações possiveis com o personagem
+
+Tela de Batalha - 
+    - personagem
+    - ações possiveis
+    - caixa de mensagem com atualizações de que esta acontecendo em cada turno
+
+Tela de troca de inimigo
+    - A wild Pokemon appeared!
+
+Tela de Game Over - 
+    - Fim do jogo
+    - Aperte algo para jogar novamente
+
+Tela de vitoria -
+    - Parabens 
+    - Aperte algo para jogar novamente
