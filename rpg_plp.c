@@ -72,7 +72,7 @@ void TelaInicial(void) {
     printf("| Defesa                       5 | Defesa                       2 | Defesa                       1 |\n" );
     printf("| Velocidade                   1 | Velocidade                   4 | Velocidade                   5 |\n" );
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
-    printf("| Digete K para escolher Knight  | Digete R para escolher o Rogue | Digete A para escolher o Archer|\n" );
+    printf("| Digete 1 para escolher Knight  | Digete 2 para escolher o Rogue | Digete 3 para escolher o Archer|\n" );
 
 }
     
@@ -88,24 +88,27 @@ int main(void) {
         printf("\n");
         TelaInicial();
         printf("\nEscolha seu personagem: ");
-        scanf("%c", &select);
+        scanf("%c", &select); fflush(stdin);
 
         select = toupper(select);
         switch(select){
-            case 'K':
+            case '1':
                 Knight(&P);
                 printf("Voce escolheu Knight\n");
                 break;
-            case 'R':
+            case '2':
                 Rogue(&P);
                 printf("Voce escolheu Rogue\n");
                 break;
-            case 'A':
+            case '3':
                 Archer(&P);
                 printf("Voce escolheu Archer\n");
                 break;
             default:
-                printf("Opcao inválida\n");
+                printf("Opcao invalida\n");
+                PauseScreen();
+
+                continue;
                 break;
         }
 
@@ -128,7 +131,6 @@ void ClearScreen(void) {
 }
 // Pause terminal
 void PauseScreen(void) {
-    getchar();
-    getchar();
+    system("pause");
 }
 // 
