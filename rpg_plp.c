@@ -23,49 +23,9 @@ void PauseScreen(void);
 // --------------------------------------------------------------
 // USUAL FUNCTIONS PREVIEW
 
-<<<<<<< HEAD
 void Knight(Character* P);
 void Assassin(Character* P);
 void Archer(Character* P);
-=======
-void Knight(Character* P) {
-    // P->class = 1;
-    // //P->level;              
-    // P->health;
-    // P->stamina;             
-    // //P->mana;               
-    // P->attack;              
-    // P->defense;            
-    // P->speed;              
-    // P->strength;           
-    // P->intelligence;
-    // Vida: 4
-    // Estâmina: 2
-    // Ataque: 3
-    // Defesa: 5
-    // Velocidade: 1
-}
-void Rogue(Character* P) {
-
-// Vida: 2
-// Estâmina: 3
-// Ataque: 5
-// Defesa: 2
-// Velocidade: 4
-
-
-}
-void Archer(Character* P) {
-// Vida: 2
-// Estâmina: 3
-// Ataque: 3
-// Defesa: 1
-// Velocidade: 5
-}
-void Wizard(Character* P) {
-
-}
->>>>>>> 61df62f494b1f3eb91ffb891d0640491dd8a6132
 // --------------------------------------------------------------
 
 void TelaInicial(void) {
@@ -89,31 +49,6 @@ int main(void) {
     Character P;
 
     do{
-<<<<<<< HEAD
-        switch(select){
-            case 1:{
-                
-                break;
-            }
-            case 2:{
-
-                break;
-            }
-            case 3:{
-
-                break;
-            }
-            case 0:{
-
-                break;
-            }
-            default:{
-
-                break;
-            }
-        }
-=======
->>>>>>> 61df62f494b1f3eb91ffb891d0640491dd8a6132
         ClearScreen();
         printf("\t\t\t\t\tBem vindo ao RPG\n");
         printf("\n");
