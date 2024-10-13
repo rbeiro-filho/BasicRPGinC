@@ -7,18 +7,24 @@
 
 // CODE STRUCTURES
 
-typedef struct Character{
+// Character 
+typedef struct Character {
     char name[20];
+<<<<<<< HEAD
     char body1[20];
     char body2[20];
     char body3[20];
     char class[10];
+=======
+    char class;             
+>>>>>>> Changes
     int health;
     int stamina;           
     int attack;              
     int defense;            
     int speed;    
 } Character;
+<<<<<<< HEAD
 
 typedef struct Enemy{
     char enemy[20];
@@ -30,6 +36,17 @@ typedef struct Enemy{
 } Enemy;
 
 
+=======
+// Enemies
+typedef struct Enemie {
+    char type;
+    int health;
+    int stamina;           
+    int attack;              
+    int defense;            
+    int speed;
+} Enemie;
+>>>>>>> Changes
 // --------------------------------------------------------------
 // VISUAL FUNCTIONS PREVIEW
 
@@ -49,6 +66,7 @@ void PauseScreen(void);
 void Knight(Character* P);
 void Assassin(Character* P);
 void Archer(Character* P);
+<<<<<<< HEAD
 // --------------------------------------------------------------
 // ENEMY FUNCTIONS PREVIEW
 
@@ -63,6 +81,13 @@ void BattleLayout(Character* P, Enemy* E);
 
 
 
+=======
+void Looter(Enemie *E);
+void Hunter(Enemie *E);
+void Murder(Enemie *E);
+int Dice(int max);
+// --------------------------------------------------------------  
+>>>>>>> Changes
 
 int main(void) {
     char select = 'Z';
@@ -201,23 +226,33 @@ void PauseScreen(void) {
 // USUAL FUNCTIONS PREVIEW
 
 // Gives the knight attributes
+<<<<<<< HEAD
 void Knight(Character* P) {
     strcpy(P->body1, "   O   ");
     strcpy(P->body2, "U/ | \\P");
     strcpy(P->body3, "  / \\  ");
     strcpy(P->class, "Knight");
+=======
+void Knight(Character *P) {
+    P->class = 1;
+>>>>>>> Changes
     P->health = 65;
     P->stamina = 35;
     P->attack = 50;
-    P->defense = 80;  
+    P->defense = 80;
     P->speed = 20;
 }
 // Gives the assassin attributes
+<<<<<<< HEAD
 void Assassin(Character* P) {
     strcpy(P->body1, "   O   ");
     strcpy(P->body2, "i/ | \\i");
     strcpy(P->body3, "  / \\  ");
     strcpy(P->class, "Assassin");
+=======
+void Assassin(Character *P) {
+    P->class = 2;
+>>>>>>> Changes
     P->health = 35;
     P->stamina = 50;
     P->attack = 80;
@@ -225,17 +260,23 @@ void Assassin(Character* P) {
     P->speed = 65;
 }
 // Gives the archer attributes
+<<<<<<< HEAD
 void Archer(Character* P) {
     strcpy(P->body1, "   O   ");
     strcpy(P->body2, "|/ | \\D");
     strcpy(P->body3, "  / \\  ");
     strcpy(P->class, "Archer");
+=======
+void Archer(Character *P) {
+    P->class = 3;
+>>>>>>> Changes
     P->health = 35;
     P->stamina = 50;
     P->attack = 50;
     P->defense = 20;
     P->speed = 80;
 }
+<<<<<<< HEAD
 
 // --------------------------------------------------------------
 // ENEMY FUNCTIONS PREVIEW
@@ -291,11 +332,39 @@ void BattleLayout (Character* P, Enemy* E) {
     printf("|       %s                                                     |\n", P->body3);
     printf("|                                                                   |\n");
     printf("|-------------------------------------------------------------------|\n" );
+=======
+// Gives the Looter attributes
+void Looter(Enemie *E) {
+    E->type = 'L';
+    E->health = 33;
+    E->stamina = 60;
+    E->attack = 45;
+    E->defense = 18;
+    E->speed = 72;
+}
+// Gives the Hunter attributes
+void Hunter(Enemie *E) {
+    E->type = 'H';
+    E->health = 45;
+    E->stamina = 60;
+    E->attack = 45;
+    E->defense = 33;
+    E->speed = 60;
+}
+// Gives the Murder attributes
+void Murder(Enemie *E) {
+    E->type = 'M';
+    E->health = 60;
+    E->stamina = 33;
+    E->attack = 60;
+    E->defense = 45;
+    E->speed = 45;
+>>>>>>> Changes
 }
 // Returns a value (min <= value <= max)
-int Dice(int min, int max) {
+int Dice(int max) {
     int random_number;
     // Starts the seed using the clock
     srand(time(NULL));
-    return random_number = (rand() % (max - min + 1)) + min;
+    return random_number = rand() % (max + 1);
 }
