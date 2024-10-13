@@ -9,7 +9,6 @@ Bloody Gorge
 You approach the Bloody Gorge, where looters lie in wait for any intruder. The path is narrow and treacherous.
 
 Challenge: Face the looters.
-Combat: Use your attack and defense to win. If player.health drops to 0, you are defeated.
 
 Forest of Souls
 After crossing the gorge, you enter the Forest of Souls, shrouded in mist. Hunters are known for letting no one leave.
