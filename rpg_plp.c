@@ -119,6 +119,16 @@ int main(void) {
         }
         PauseScreen();
     }while(control != 1);
+
+    // Battle Looters
+    do{
+        ClearScreen();
+        BattleLayout(&C, &E, texto);
+
+
+    }while(C.health > 0 && E.health > 0);
+
+
     return 0;
 }
 // --------------------------------------------------------------
@@ -187,6 +197,7 @@ void AMS(void) {
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
 }
+
 // Clear terminal
 void ClearScreen(void) {
     system("cls");
