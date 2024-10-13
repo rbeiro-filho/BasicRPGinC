@@ -40,6 +40,7 @@ void MainScreen(void);
 void KMS(void);
 void SMS(void);
 void AMS(void);
+void BattleLayout(Character* P, Enemy* E, char *texto);
 void ClearScreen(void);
 void PauseScreen(void);
 // --------------------------------------------------------------
@@ -67,6 +68,12 @@ int main(void) {
     char select = 'Z';
     Character C;
     system("chcp 65001 > nul");
+    Knight(&C);
+    Enemy E;
+    Looter(&E);
+    char texto[100] = "A wild looter appears";
+    BattleLayout(&C, &E, texto);
+    PauseScreen();
 
     
 
@@ -238,9 +245,6 @@ void Looter(Enemy *E) {
     strcpy(E->body2, " / | \\i");
     strcpy(E->body3, "  / \\  ");
     strcpy(E->type,"Looter");
-    strcpy(E->body1, "   O   ");
-    strcpy(E->body2, "U/ | \\P");
-    strcpy(E->body3, "  / \\  ");
     E->health = 33;
     E->stamina = 60;
     E->attack = 45;
@@ -272,16 +276,20 @@ void Murder(Enemy *E) {
     E->speed = 45;
 }
 
-void BattleLayout (Character* P, Enemy* E) {
+void BattleLayout (Character* P, Enemy* E, char *texto) {
     printf("                                Combat                                \n");
-    printf("|%-8s                         VS                    %8s: %s|\n", P->class, E->type, E->body1);
+    printf("| %-8s                        VS                       %8s |\n", P->class, E->type, E->body1);
     printf("|-------------------------------------------------------------------|\n" );
     printf("| Health: %3d                                           Health: %3d |\n", P->health, E->health);
     printf("|                                                                   |\n");
+    printf("|          %s                              %s             |\n", P->body1, E->body1);
+    printf("|          %s                              %s             |\n", P->body2, E->body2);
+    printf("|          %s                              %s             |\n", P->body3, E->body3); 
     printf("|                                                                   |\n");
-    printf("|       %s                                    %s               |\n", P->body1, E->body1);
-    printf("|       %s                                    %s               |\n", P->body2);
-    printf("|       %s                                    %s               |\n", P->body3);
+    printf("| Stamina: %3d                                         Stamina: %3d |\n", P->stamina, E->stamina);
+    printf("|-------------------------------------------------------------------|\n" );
+    printf("|                                                                   |\n");
+    printf("|%-67s|\n", texto);
     printf("|                                                                   |\n");
     printf("|-------------------------------------------------------------------|\n" );
 }
@@ -293,3 +301,4 @@ int Dice(int max) {
     srand(time(NULL));
     return random_number = rand() % (max + 1);
 }
+
