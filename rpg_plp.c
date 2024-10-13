@@ -7,8 +7,7 @@
 
 // CODE STRUCTURES
 
-// Character 
-typedef struct Character {
+typedef struct Character{
     char name[20];
     char body1[20];
     char body2[20];
@@ -21,20 +20,19 @@ typedef struct Character {
     int speed;    
 } Character;
 
-typedef struct Enemy{
-    char enemy[20];
-    char body[20];
+typedef struct Enemy {
+    char type[10];
+    char body1[20];
+    char body2[20];
+    char body3[20];
     int health;
-    int attack;
-    int defense;
+    int stamina;           
+    int attack;              
+    int defense;            
     int speed;
 } Enemy;
-
-
 // --------------------------------------------------------------
 // VISUAL FUNCTIONS PREVIEW
-
-
 
 void NameScreen(void);
 void Menu(void);
@@ -53,26 +51,24 @@ void Archer(Character* P);
 // --------------------------------------------------------------
 // ENEMY FUNCTIONS PREVIEW
 
-void Slime(Enemy* E);
-void Skeleton(Enemy* E);
-void Goblin(Enemy* E);
-void Demon(Enemy* E);
+void Looter(Enemy *E);
+void Hunter(Enemy *E);
+void Murder(Enemy *E);
 // --------------------------------------------------------------
 // COMBAT FUNCTIONS PREVIEW
 
-void BattleLayout(Character* P, Enemy* E);
+//void BattleLayout(Character* P, Enemy* E);
+int Dice(int max);
 
-
-
+// --------------------------------------------------------------
 
 int main(void) {
+    int control = 0;
     char select = 'Z';
     Character C;
     system("chcp 65001 > nul");
-    int control = 0;
 
-
-    PauseScreen();
+    
 
     // Choose the player name
     do{
@@ -115,12 +111,7 @@ int main(void) {
                 break;
         }
         PauseScreen();
-    }while(control == 0);
-    
-
-
-
-
+    }while(control != 1);
     return 0;
 }
 // --------------------------------------------------------------
@@ -210,7 +201,7 @@ void Knight(Character* P) {
     P->health = 65;
     P->stamina = 35;
     P->attack = 50;
-    P->defense = 80;
+    P->defense = 80;  
     P->speed = 20;
 }
 // Gives the assassin attributes
@@ -241,58 +232,51 @@ void Archer(Character* P) {
 // --------------------------------------------------------------
 // ENEMY FUNCTIONS PREVIEW
 
-// Gives the slime attributes
-void Slime(Enemy* E) {
-    strcpy(E->enemy, "Slime");
-    strcpy(E->body, "\U0001F4A9");
-    E->health = 20;
-    E->attack = 10;
-    E->defense = 10;
-    E->speed = 10;
+// Gives the Looter attributes
+void Looter(Enemy *E) {
+    strcpy(E->type,"Looter");
+    strcpy(E->body1, "   O   ");
+    strcpy(E->body2, "U/ | \\P");
+    strcpy(E->body3, "  / \\  ");
+    E->health = 33;
+    E->stamina = 60;
+    E->attack = 45;
+    E->defense = 18;
+    E->speed = 72;
 }
-
-// Gives the skeleton attributes
-void Skeleton(Enemy* E) {
-    strcpy(E->enemy, "Skeleton");
-    E->health = 30;
-    E->attack = 15;
-    E->defense = 15;
-    E->speed = 15;
+// Gives the Hunter attributes
+void Hunter(Enemy *E) {
+    strcpy(E->type,"Hunter");
+    E->health = 45;
+    E->stamina = 60;
+    E->attack = 45;
+    E->defense = 33;
+    E->speed = 60;
 }
-
-// Gives the goblin attributes
-void Goblin(Enemy* E) {
-    strcpy(E->enemy, "Goblin");
-    E->health = 40;
-    E->attack = 20;
-    E->defense = 20;
-    E->speed = 20;
-}
-
-// Gives the demon attributes
-void Demon(Enemy* E) {
-    strcpy(E->enemy, "Demon");
-    E->health = 50;
-    E->attack = 25;
-    E->defense = 25;
-    E->speed = 25;
+// Gives the Murder attributes
+void Murder(Enemy *E) {
+    strcpy(E->type,"Murder");
+    E->health = 60;
+    E->stamina = 33;
+    E->attack = 60;
+    E->defense = 45;
+    E->speed = 45;
 }
 
 void BattleLayout (Character* P, Enemy* E) {
-    
-
     printf("                                Combat                                \n");
-    printf("|%-8s                         VS                    %8s: %s|\n", P->class, E->enemy, E->body);
+    printf("|%-8s                         VS                    %8s: %s|\n", P->class, E->type, E->body1);
     printf("|-------------------------------------------------------------------|\n" );
     printf("| Health: %3d                                           Health: %3d |\n", P->health, E->health);
     printf("|                                                                   |\n");
     printf("|                                                                   |\n");
-    printf("|       %s                                    %s               |\n", P->body1, E->body);
-    printf("|       %s                                                     |\n", P->body2);
-    printf("|       %s                                                     |\n", P->body3);
+    printf("|       %s                                    %s               |\n", P->body1, E->body1);
+    printf("|       %s                                    %s               |\n", P->body2);
+    printf("|       %s                                    %s               |\n", P->body3);
     printf("|                                                                   |\n");
     printf("|-------------------------------------------------------------------|\n" );
 }
+
 // Returns a value (min <= value <= max)
 int Dice(int max) {
     int random_number;
