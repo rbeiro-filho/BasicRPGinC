@@ -1,22 +1,25 @@
 // ATTRIBUTE DISTRIBUTION BY CLASS
 
 KNIGHT
-Health: 65
 Stamina: 35
 Attack: 50
-Defense: 80
-Speed: 20
+Defense: 70
+Dexterity: 20
+
+Critical skill: The opponent lose 50% of Defense.
 
 ASSASSIN
-Health: 35
 Stamina: 50
 Attack: 80
 Defense: 35
-Speed: 65
+Dexterity: 65
+
+Critical skill: The damage taken is multiplied by 1,8.
 
 ARCHER
-Health: 35
 Stamina: 50
 Attack: 50
 Defense: 20
-Speed: 80
+Dexterity: 80
+
+Critical skill: It is possible to land another attack before the enemy attacks.

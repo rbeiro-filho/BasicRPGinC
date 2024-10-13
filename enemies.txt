@@ -1,22 +1,19 @@
 // ATTRIBUTE DISTRIBUTION BY TYPE OF ENEMIE
 
 LOOTER
-Health: 33
 Stamina: 60
 Attack: 45
 Defense: 18
-Speed: 72
+Dexterity: 72
 
 HUNTER
-Health: 45
 Stamina: 60
 Attack: 45
 Defense: 33
-Speed: 60
+Dexterity: 60
 
 MURDER
-Health: 60
 Stamina: 33
 Attack: 60
 Defense: 45
-Speed: 45
+Dexterity: 45
