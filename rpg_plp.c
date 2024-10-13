@@ -7,50 +7,29 @@
 
 // CODE STRUCTURES
 
-// Character 
-typedef struct Character {
+typedef struct Character{
     char name[20];
-<<<<<<< HEAD
     char body1[20];
     char body2[20];
     char body3[20];
     char class[10];
-=======
-    char class;             
->>>>>>> Changes
     int health;
     int stamina;           
     int attack;              
     int defense;            
     int speed;    
 } Character;
-<<<<<<< HEAD
 
-typedef struct Enemy{
-    char enemy[20];
-    char body[20];
-    int health;
-    int attack;
-    int defense;
-    int speed;
-} Enemy;
-
-
-=======
-// Enemies
-typedef struct Enemie {
-    char type;
+typedef struct Enemy {
+    char type[10];
     int health;
     int stamina;           
     int attack;              
     int defense;            
     int speed;
-} Enemie;
->>>>>>> Changes
+} Enemy;
 // --------------------------------------------------------------
 // VISUAL FUNCTIONS PREVIEW
-
-
 
 void NameScreen(void);
 void Menu(void);
@@ -66,37 +45,25 @@ void PauseScreen(void);
 void Knight(Character* P);
 void Assassin(Character* P);
 void Archer(Character* P);
-<<<<<<< HEAD
 // --------------------------------------------------------------
 // ENEMY FUNCTIONS PREVIEW
 
-void Slime(Enemy* E);
-void Skeleton(Enemy* E);
-void Goblin(Enemy* E);
-void Demon(Enemy* E);
+void Looter(Enemy *E);
+void Hunter(Enemy *E);
+void Murder(Enemy *E);
 // --------------------------------------------------------------
 // COMBAT FUNCTIONS PREVIEW
 
-void BattleLayout(Character* P, Enemy* E);
-
-
-
-=======
-void Looter(Enemie *E);
-void Hunter(Enemie *E);
-void Murder(Enemie *E);
+//void BattleLayout(Character* P, Enemy* E);
 int Dice(int max);
-// --------------------------------------------------------------  
->>>>>>> Changes
+
+// --------------------------------------------------------------
 
 int main(void) {
+    int control = 0;
     char select = 'Z';
     Character C;
     system("chcp 65001 > nul");
-    int control = 0;
-
-
-    PauseScreen();
 
     // Choose the player name
     do{
@@ -139,12 +106,7 @@ int main(void) {
                 break;
         }
         PauseScreen();
-    }while(control == 0);
-    
-
-
-
-
+    }while(control != 1);
     return 0;
 }
 // --------------------------------------------------------------
@@ -226,33 +188,23 @@ void PauseScreen(void) {
 // USUAL FUNCTIONS PREVIEW
 
 // Gives the knight attributes
-<<<<<<< HEAD
 void Knight(Character* P) {
     strcpy(P->body1, "   O   ");
     strcpy(P->body2, "U/ | \\P");
     strcpy(P->body3, "  / \\  ");
     strcpy(P->class, "Knight");
-=======
-void Knight(Character *P) {
-    P->class = 1;
->>>>>>> Changes
     P->health = 65;
     P->stamina = 35;
     P->attack = 50;
-    P->defense = 80;
+    P->defense = 80;  
     P->speed = 20;
 }
 // Gives the assassin attributes
-<<<<<<< HEAD
 void Assassin(Character* P) {
     strcpy(P->body1, "   O   ");
     strcpy(P->body2, "i/ | \\i");
     strcpy(P->body3, "  / \\  ");
     strcpy(P->class, "Assassin");
-=======
-void Assassin(Character *P) {
-    P->class = 2;
->>>>>>> Changes
     P->health = 35;
     P->stamina = 50;
     P->attack = 80;
@@ -260,67 +212,51 @@ void Assassin(Character *P) {
     P->speed = 65;
 }
 // Gives the archer attributes
-<<<<<<< HEAD
 void Archer(Character* P) {
     strcpy(P->body1, "   O   ");
     strcpy(P->body2, "|/ | \\D");
     strcpy(P->body3, "  / \\  ");
     strcpy(P->class, "Archer");
-=======
-void Archer(Character *P) {
-    P->class = 3;
->>>>>>> Changes
     P->health = 35;
     P->stamina = 50;
     P->attack = 50;
     P->defense = 20;
     P->speed = 80;
 }
-<<<<<<< HEAD
 
 // --------------------------------------------------------------
 // ENEMY FUNCTIONS PREVIEW
 
-// Gives the slime attributes
-void Slime(Enemy* E) {
-    strcpy(E->enemy, "Slime");
-    strcpy(E->body, "\U0001F4A9");
-    E->health = 20;
-    E->attack = 10;
-    E->defense = 10;
-    E->speed = 10;
+// Gives the Looter attributes
+void Looter(Enemy *E) {
+    strcpy(E->type,"Looter");
+    E->health = 33;
+    E->stamina = 60;
+    E->attack = 45;
+    E->defense = 18;
+    E->speed = 72;
 }
-
-// Gives the skeleton attributes
-void Skeleton(Enemy* E) {
-    strcpy(E->enemy, "Skeleton");
-    E->health = 30;
-    E->attack = 15;
-    E->defense = 15;
-    E->speed = 15;
+// Gives the Hunter attributes
+void Hunter(Enemy *E) {
+    strcpy(E->type,"Hunter");
+    E->health = 45;
+    E->stamina = 60;
+    E->attack = 45;
+    E->defense = 33;
+    E->speed = 60;
 }
-
-// Gives the goblin attributes
-void Goblin(Enemy* E) {
-    strcpy(E->enemy, "Goblin");
-    E->health = 40;
-    E->attack = 20;
-    E->defense = 20;
-    E->speed = 20;
+// Gives the Murder attributes
+void Murder(Enemy *E) {
+    strcpy(E->type,"Murder");
+    E->health = 60;
+    E->stamina = 33;
+    E->attack = 60;
+    E->defense = 45;
+    E->speed = 45;
 }
-
-// Gives the demon attributes
-void Demon(Enemy* E) {
-    strcpy(E->enemy, "Demon");
-    E->health = 50;
-    E->attack = 25;
-    E->defense = 25;
-    E->speed = 25;
-}
-
+/*
+ Precisa de mudanças
 void BattleLayout (Character* P, Enemy* E) {
-    
-
     printf("                                Combat                                \n");
     printf("|%-8s                         VS                    %8s: %s|\n", P->class, E->enemy, E->body);
     printf("|-------------------------------------------------------------------|\n" );
@@ -332,35 +268,8 @@ void BattleLayout (Character* P, Enemy* E) {
     printf("|       %s                                                     |\n", P->body3);
     printf("|                                                                   |\n");
     printf("|-------------------------------------------------------------------|\n" );
-=======
-// Gives the Looter attributes
-void Looter(Enemie *E) {
-    E->type = 'L';
-    E->health = 33;
-    E->stamina = 60;
-    E->attack = 45;
-    E->defense = 18;
-    E->speed = 72;
 }
-// Gives the Hunter attributes
-void Hunter(Enemie *E) {
-    E->type = 'H';
-    E->health = 45;
-    E->stamina = 60;
-    E->attack = 45;
-    E->defense = 33;
-    E->speed = 60;
-}
-// Gives the Murder attributes
-void Murder(Enemie *E) {
-    E->type = 'M';
-    E->health = 60;
-    E->stamina = 33;
-    E->attack = 60;
-    E->defense = 45;
-    E->speed = 45;
->>>>>>> Changes
-}
+*/
 // Returns a value (min <= value <= max)
 int Dice(int max) {
     int random_number;
