@@ -1,17 +1,17 @@
-// DESCRIÇÃO DE ATRIBUTOS
-Nome (name) – Nome do personagem.
-Classe (class) – Define o tipo do personagem.
-Vida (health) – Quantidade de pontos de vida (HP).
-Estâmina (stamina) - Quantidade de pontos de estâmina para habilidades físicas.
-Ataque (attack) – O valor de ataque, utilizado para calcular o dano tanto físico quanto mágico.
-Defesa (defense) – O valor de defesa, usado para reduzir o dano recebido.
-Velocidade (speed) – Influencia quem ataca primeiro e a chance de esquiva.
+// ATTRIBUTE DESCRIPTIONS
+Name – The character's name.
+Class – Defines the character's type.
+Health – The number of health points (HP).
+Stamina – The amount of stamina points for physical abilities.
+Attack – The attack value, used to calculate both physical and magical damage.
+Defense – The defense value, used to reduce incoming damage.
+Speed – Influences who attacks first and the chance to dodge.
 
-// LIMITES DE ATRIBUTOS
-Nome: 20 caracteres
-Classe: 1/2/3
-Vida: 100
-Estâmina: 100
-Ataque: 100
-Defesa: 100
-Velocidade: 100
+// ATTRIBUTE LIMITS
+Name: 20 characters
+Class: 1/2/3
+Health: 100
+Stamina: 100
+Attack: 100
+Defense: 100
+Speed: 100

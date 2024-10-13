@@ -7,15 +7,25 @@
 
 // CODE STRUCTURES
 
-typedef struct Character{
+// Character 
+typedef struct Character {
     char name[20];
-    int class;             
+    char class;             
     int health;
     int stamina;           
     int attack;              
     int defense;            
     int speed;    
 } Character;
+// Enemies
+typedef struct Enemie {
+    char type;
+    int health;
+    int stamina;           
+    int attack;              
+    int defense;            
+    int speed;
+} Enemie;
 // --------------------------------------------------------------
 // VISUAL FUNCTIONS PREVIEW
 
@@ -33,6 +43,10 @@ void PauseScreen(void);
 void Knight(Character* P);
 void Assassin(Character* P);
 void Archer(Character* P);
+void Looter(Enemie *E);
+void Hunter(Enemie *E);
+void Murder(Enemie *E);
+int Dice(int max);
 // --------------------------------------------------------------  
 
 int main(void) {
@@ -161,16 +175,16 @@ void PauseScreen(void) {
 // USUAL FUNCTIONS PREVIEW
 
 // Gives the knight attributes
-void Knight(Character* P) {
+void Knight(Character *P) {
     P->class = 1;
     P->health = 65;
     P->stamina = 35;
     P->attack = 50;
-    P->defense = 80;  
+    P->defense = 80;
     P->speed = 20;
 }
 // Gives the assassin attributes
-void Assassin(Character* P) {
+void Assassin(Character *P) {
     P->class = 2;
     P->health = 35;
     P->stamina = 50;
@@ -179,7 +193,7 @@ void Assassin(Character* P) {
     P->speed = 65;
 }
 // Gives the archer attributes
-void Archer(Character* P) {
+void Archer(Character *P) {
     P->class = 3;
     P->health = 35;
     P->stamina = 50;
@@ -187,10 +201,37 @@ void Archer(Character* P) {
     P->defense = 20;
     P->speed = 80;
 }
+// Gives the Looter attributes
+void Looter(Enemie *E) {
+    E->type = 'L';
+    E->health = 33;
+    E->stamina = 60;
+    E->attack = 45;
+    E->defense = 18;
+    E->speed = 72;
+}
+// Gives the Hunter attributes
+void Hunter(Enemie *E) {
+    E->type = 'H';
+    E->health = 45;
+    E->stamina = 60;
+    E->attack = 45;
+    E->defense = 33;
+    E->speed = 60;
+}
+// Gives the Murder attributes
+void Murder(Enemie *E) {
+    E->type = 'M';
+    E->health = 60;
+    E->stamina = 33;
+    E->attack = 60;
+    E->defense = 45;
+    E->speed = 45;
+}
 // Returns a value (min <= value <= max)
-int Dice(int min, int max) {
+int Dice(int max) {
     int random_number;
     // Starts the seed using the clock
     srand(time(NULL));
-    return random_number = (rand() % (max - min + 1)) + min;
+    return random_number = rand() % (max + 1);
 }

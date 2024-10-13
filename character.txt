@@ -1,22 +1,22 @@
-// DISTRIBUIÇÃO INICIAL DE ATRIBUTOS POR CLASSE
+// ATTRIBUTE DISTRIBUTION BY CLASS
 
-CAVALEIRO  15
-Vida: 4
-Estâmina: 2
-Ataque: 3
-Defesa: 5
-Velocidade: 1
+KNIGHT
+Health: 65
+Stamina: 35
+Attack: 50
+Defense: 80
+Speed: 20
 
-ASSASSINO
-Vida: 2
-Estâmina: 3
-Ataque: 5
-Defesa: 2
-Velocidade: 4
+ASSASSIN
+Health: 35
+Stamina: 50
+Attack: 80
+Defense: 35
+Speed: 65
 
-ARQUEIRO
-Vida: 2
-Estâmina: 3
-Ataque: 3
-Defesa: 1
-Velocidade: 5
+ARCHER
+Health: 35
+Stamina: 50
+Attack: 50
+Defense: 20
+Speed: 80
