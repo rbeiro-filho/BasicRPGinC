@@ -234,6 +234,9 @@ void Archer(Character* P) {
 
 // Gives the Looter attributes
 void Looter(Enemy *E) {
+    strcpy(E->body1, "   O   ");
+    strcpy(E->body2, " / | \\i");
+    strcpy(E->body3, "  / \\  ");
     strcpy(E->type,"Looter");
     strcpy(E->body1, "   O   ");
     strcpy(E->body2, "U/ | \\P");
@@ -246,6 +249,9 @@ void Looter(Enemy *E) {
 }
 // Gives the Hunter attributes
 void Hunter(Enemy *E) {
+    strcpy(E->body1, "   O   ");
+    strcpy(E->body2, " / | \\D");
+    strcpy(E->body3, "  / \\  ");
     strcpy(E->type,"Hunter");
     E->health = 45;
     E->stamina = 60;
@@ -255,6 +261,9 @@ void Hunter(Enemy *E) {
 }
 // Gives the Murder attributes
 void Murder(Enemy *E) {
+    strcpy(E->body1, "   O   ");
+    strcpy(E->body2, "l/ | \\l");
+    strcpy(E->body3, "  / \\  ");
     strcpy(E->type,"Murder");
     E->health = 60;
     E->stamina = 33;
