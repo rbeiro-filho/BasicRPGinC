@@ -41,6 +41,8 @@ void MainScreen(void);
 void KMS(void);
 void SMS(void);
 void AMS(void);
+void BattleLayout(Character* P, Enemy* E, char *texto);
+void BattleLayout (Character* P, Enemy* E, char *texto);
 void ClearScreen(void);
 void PauseScreen(void);
 // --------------------------------------------------------------
@@ -75,6 +77,14 @@ int main(void) {
     char select = 'Z';
     Character C;
     system("chcp 65001 > nul");
+    Knight(&C);
+    Enemy E;
+    Looter(&E);
+    char texto[100] = "A wild looter appears";
+    BattleLayout(&C, &E, texto);
+    PauseScreen();
+
+    
 
     // Choose the player name
     do{
@@ -118,6 +128,16 @@ int main(void) {
         }
         PauseScreen();
     }while(control != 1);
+
+    // Battle Looters
+    do{
+        ClearScreen();
+        BattleLayout(&C, &E, texto);
+
+
+    }while(C.health > 0 && E.health > 0);
+
+
     return 0;
 }
 // --------------------------------------------------------------
@@ -185,6 +205,24 @@ void AMS(void) {
     printf("| Dexterity                   20 | Dexterity                   65 | Dexterity                   80 |\n" );
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
+}
+//Battle Layout
+void BattleLayout (Character* P, Enemy* E, char *texto) {
+    printf("                                Combat                                \n");
+    printf("| %-8s                        VS                       %8s |\n", P->class, E->type);
+    printf("|-------------------------------------------------------------------|\n" );
+    printf("| Health: %3d                                           Health: %3d |\n", P->health, E->health);
+    printf("|                                                                   |\n");
+    printf("|          %s                              %s             |\n", P->body1, E->body1);
+    printf("|          %s                              %s             |\n", P->body2, E->body2);
+    printf("|          %s                              %s             |\n", P->body3, E->body3); 
+    printf("|                                                                   |\n");
+    printf("| Stamina: %3d                                         Stamina: %3d |\n", P->stamina, E->stamina);
+    printf("|-------------------------------------------------------------------|\n" );
+    printf("|                                                                   |\n");
+    printf("|%-67s|\n", texto);
+    printf("|                                                                   |\n");
+    printf("|-------------------------------------------------------------------|\n" );
 }
 // Clear terminal
 void ClearScreen(void) {
