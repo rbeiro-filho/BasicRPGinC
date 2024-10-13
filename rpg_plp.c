@@ -7,7 +7,8 @@
 
 // CODE STRUCTURES
 
-typedef struct Character{
+// Character 
+typedef struct Character {
     char name[20];
     char body1[20];
     char body2[20];
@@ -20,16 +21,20 @@ typedef struct Character{
     int speed;    
 } Character;
 
-typedef struct Enemy {
-    char type[10];
+typedef struct Enemy{
+    char enemy[20];
+    char body[20];
     int health;
-    int stamina;           
-    int attack;              
-    int defense;            
+    int attack;
+    int defense;
     int speed;
 } Enemy;
+
+
 // --------------------------------------------------------------
 // VISUAL FUNCTIONS PREVIEW
+
+
 
 void NameScreen(void);
 void Menu(void);
@@ -48,22 +53,26 @@ void Archer(Character* P);
 // --------------------------------------------------------------
 // ENEMY FUNCTIONS PREVIEW
 
-void Looter(Enemy *E);
-void Hunter(Enemy *E);
-void Murder(Enemy *E);
+void Slime(Enemy* E);
+void Skeleton(Enemy* E);
+void Goblin(Enemy* E);
+void Demon(Enemy* E);
 // --------------------------------------------------------------
 // COMBAT FUNCTIONS PREVIEW
 
-//void BattleLayout(Character* P, Enemy* E);
-int Dice(int max);
+void BattleLayout(Character* P, Enemy* E);
 
-// --------------------------------------------------------------
+
+
 
 int main(void) {
-    int control = 0;
     char select = 'Z';
     Character C;
     system("chcp 65001 > nul");
+    int control = 0;
+
+
+    PauseScreen();
 
     // Choose the player name
     do{
@@ -106,7 +115,12 @@ int main(void) {
                 break;
         }
         PauseScreen();
-    }while(control != 1);
+    }while(control == 0);
+    
+
+
+
+
     return 0;
 }
 // --------------------------------------------------------------
@@ -196,7 +210,7 @@ void Knight(Character* P) {
     P->health = 65;
     P->stamina = 35;
     P->attack = 50;
-    P->defense = 80;  
+    P->defense = 80;
     P->speed = 20;
 }
 // Gives the assassin attributes
@@ -227,36 +241,46 @@ void Archer(Character* P) {
 // --------------------------------------------------------------
 // ENEMY FUNCTIONS PREVIEW
 
-// Gives the Looter attributes
-void Looter(Enemy *E) {
-    strcpy(E->type,"Looter");
-    E->health = 33;
-    E->stamina = 60;
-    E->attack = 45;
-    E->defense = 18;
-    E->speed = 72;
+// Gives the slime attributes
+void Slime(Enemy* E) {
+    strcpy(E->enemy, "Slime");
+    strcpy(E->body, "\U0001F4A9");
+    E->health = 20;
+    E->attack = 10;
+    E->defense = 10;
+    E->speed = 10;
 }
-// Gives the Hunter attributes
-void Hunter(Enemy *E) {
-    strcpy(E->type,"Hunter");
-    E->health = 45;
-    E->stamina = 60;
-    E->attack = 45;
-    E->defense = 33;
-    E->speed = 60;
+
+// Gives the skeleton attributes
+void Skeleton(Enemy* E) {
+    strcpy(E->enemy, "Skeleton");
+    E->health = 30;
+    E->attack = 15;
+    E->defense = 15;
+    E->speed = 15;
 }
-// Gives the Murder attributes
-void Murder(Enemy *E) {
-    strcpy(E->type,"Murder");
-    E->health = 60;
-    E->stamina = 33;
-    E->attack = 60;
-    E->defense = 45;
-    E->speed = 45;
+
+// Gives the goblin attributes
+void Goblin(Enemy* E) {
+    strcpy(E->enemy, "Goblin");
+    E->health = 40;
+    E->attack = 20;
+    E->defense = 20;
+    E->speed = 20;
 }
-/*
- Precisa de mudanças
+
+// Gives the demon attributes
+void Demon(Enemy* E) {
+    strcpy(E->enemy, "Demon");
+    E->health = 50;
+    E->attack = 25;
+    E->defense = 25;
+    E->speed = 25;
+}
+
 void BattleLayout (Character* P, Enemy* E) {
+    
+
     printf("                                Combat                                \n");
     printf("|%-8s                         VS                    %8s: %s|\n", P->class, E->enemy, E->body);
     printf("|-------------------------------------------------------------------|\n" );
@@ -269,7 +293,6 @@ void BattleLayout (Character* P, Enemy* E) {
     printf("|                                                                   |\n");
     printf("|-------------------------------------------------------------------|\n" );
 }
-*/
 // Returns a value (min <= value <= max)
 int Dice(int max) {
     int random_number;
