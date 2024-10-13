@@ -278,7 +278,7 @@ void Murder(Enemy *E) {
 
 void BattleLayout (Character* P, Enemy* E, char *texto) {
     printf("                                Combat                                \n");
-    printf("| %-8s                        VS                       %8s |\n", P->class, E->type, E->body1);
+    printf("| %-8s                        VS                       %8s |\n", P->class, E->type);
     printf("|-------------------------------------------------------------------|\n" );
     printf("| Health: %3d                                           Health: %3d |\n", P->health, E->health);
     printf("|                                                                   |\n");
