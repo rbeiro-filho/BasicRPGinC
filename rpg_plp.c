@@ -88,9 +88,11 @@ void LowerDefense(Enemy *E);
 
 int D20(int i);
 
+
 // --------------------------------------------------------------
 
 int main(void) {
+    ClearScreen();
     int control = 0;
     char select = 'Z';
     Character C;
@@ -150,35 +152,79 @@ int main(void) {
     strcpy(texto, "You've found a Looter");
     BattleLayout(&C, &E, texto);
     sleep(5);
+
+    char action[100] = "1- Attack                                                  2- Defend\n";
+    int damage;
+        
     
     do{
         ClearScreen();
         strcpy(texto, "Choose your action");
         BattleLayout(&C, &E, texto);
-        printf("1- Attack                     2- Defend                      3- Run\n");
+        printf("%s\n", action);
+
         select = getch(); fflush(stdin);
+
         switch(select){
             case '1':
-                strcpy(texto, "You've attacked the Looter");
+                if(Initiative(C.dexterity, E.dexterity)){
+                    damage = Attack(C.attack, E.defense, D20(1));
+                    E.health -= damage;
+                    sprintf (texto, "You've attacked the %s, %d damage caused", E.type, damage);
+                    BattleLayout(&C, &E, texto);
+                    sleep(3);
+                    ClearScreen();
+                    if(E.health <= 0)
+                        break;
+                    
+                    damage = Attack(E.attack, C.defense, D20(2));
+                    C.health -= damage;
+                    sprintf (texto, "The %s attacked you, %d damage caused", E.type, damage);
+                    BattleLayout(&C, &E, texto);
+                    sleep(3);
+                }else{
+                    damage = Attack(E.attack, C.defense, D20(2));
+                    C.health -= damage;
+                    sprintf (texto, "The %s attacked you, %d damage caused", E.type, damage);
+                    BattleLayout(&C, &E, texto);
+                    sleep(3);
+                    ClearScreen();
+                    if(C.health <= 0)
+                        break;
+                    
+                    damage = Attack(C.attack, E.defense, D20(1));
+                    E.health -= damage;
+                    sprintf (texto, "You've attacked the %s, %d damage caused", E.type, damage);
+                    BattleLayout(&C, &E, texto);
+                    sleep(3);
+                }
                 
-                BattleLayout(&C, &E, texto);
                 break;
             case '2':
-                strcpy(texto, "You've defended yourself");
+                IncreaseDefense(&C);
+                sprintf (texto, "Your defense has increased");
                 BattleLayout(&C, &E, texto);
-                break;
-            case '3':
-                strcpy(texto, "You've run away");
+                sleep(3);
+                ClearScreen();
+
+                damage = Attack(E.attack, C.defense, D20(2));
+                C.health -= damage;
+                sprintf (texto, "The %s attacked you, %d damage caused", E.type, damage);
                 BattleLayout(&C, &E, texto);
+                sleep(3);
+                ClearScreen();
                 break;
             default:
                 strcpy(texto, "Not a valid option");
                 BattleLayout(&C, &E, texto);
                 break;
         }
-        PauseScreen();
 
     }while(C.health > 0 && E.health > 0);
+
+    strcpy(texto, "You won the battle");
+    BattleLayout(&C, &E, texto);
+    sleep(5);
 
     // Battle Hunter
     ClearScreen();
@@ -191,21 +237,57 @@ int main(void) {
         ClearScreen();
         strcpy(texto, "Choose your action");
         BattleLayout(&C, &E, texto);
-        printf("1- Attack                     2- Defend                      3- Run\n");
+        printf("%s\n", action);
         select = getch(); fflush(stdin);
         switch(select){
             case '1':
-                strcpy(texto, "You've attacked the Hunter");
-                BattleLayout(&C, &E, texto);
+                if(Initiative(C.dexterity, E.dexterity)){
+                    damage = Attack(C.attack, E.defense, D20(1));
+                    E.health -= damage;
+                    sprintf (texto, "You've attacked the %s, %d damage caused", E.type, damage);
+                    BattleLayout(&C, &E, texto);
+                    sleep(3);
+                    ClearScreen();
+                    if(E.health <= 0)
+                        break;
+                    
+                    damage = Attack(E.attack, C.defense, D20(2));
+                    C.health -= damage;
+                    sprintf (texto, "The %s attacked you, %d damage caused", E.type, damage);
+                    BattleLayout(&C, &E, texto);
+                    sleep(3);
+                }else{
+                    damage = Attack(E.attack, C.defense, D20(2));
+                    C.health -= damage;
+                    sprintf (texto, "The %s attacked you, %d damage caused", E.type, damage);
+                    BattleLayout(&C, &E, texto);
+                    sleep(3);
+                    ClearScreen();
+                    if(C.health <= 0)
+                        break;
+                    
+                    damage = Attack(C.attack, E.defense, D20(1));
+                    E.health -= damage;
+                    sprintf (texto, "You've attacked the %s, %d damage caused", E.type, damage);
+                    BattleLayout(&C, &E, texto);
+                    sleep(3);
+                }
                 break;
             case '2':
-                strcpy(texto, "You've defended yourself");
+                IncreaseDefense(&C);
+                sprintf (texto, "Your defense has increased");
                 BattleLayout(&C, &E, texto);
-                break;
-            case '3':
-                strcpy(texto, "You've run away");
+                sleep(3);
+                ClearScreen();
+
+                damage = Attack(E.attack, C.defense, D20(2));
+                C.health -= damage;
+                sprintf (texto, "The %s attacked you, %d damage caused", E.type, damage);
                 BattleLayout(&C, &E, texto);
+                sleep(3);
+                ClearScreen();
                 break;
+
             default:
                 strcpy(texto, "Not a valid option");
                 BattleLayout(&C, &E, texto);
@@ -214,6 +296,10 @@ int main(void) {
         PauseScreen();
 
     }while(C.health > 0 && E.health > 0);
+
+    strcpy(texto, "You won the battle");
+    BattleLayout(&C, &E, texto);
+    sleep(5);
 
     // Battle Murder
     ClearScreen();
@@ -226,20 +312,48 @@ int main(void) {
         ClearScreen();
         strcpy(texto, "Choose your action");
         BattleLayout(&C, &E, texto);
-        printf("1- Attack                     2- Defend                      3- Run\n");
+        printf("%s\n", action);
         select = getch(); fflush(stdin);
         switch(select){
             case '1':
-                strcpy(texto, "You've attacked the Hunter");
-                BattleLayout(&C, &E, texto);
+                if(Initiative(C.dexterity, E.dexterity)){
+                    damage = Attack(C.attack, E.defense, D20(1));
+                    E.health -= damage;
+                    sprintf (texto, "You've attacked the %s, %d damage caused", E.type, damage);
+                    BattleLayout(&C, &E, texto);
+                    sleep(3);
+                    ClearScreen();
+                    if(E.health <= 0)
+                        break;
+                    
+                    damage = Attack(E.attack, C.defense, D20(2));
+                    C.health -= damage;
+                    sprintf (texto, "The %s attacked you, %d damage caused", E.type, damage);
+                    BattleLayout(&C, &E, texto);
+                    sleep(3);
+                }else{
+                    damage = Attack(E.attack, C.defense, D20(2));
+                    C.health -= damage;
+                    sprintf (texto, "The %s attacked you, %d damage caused", E.type, damage);
+                    BattleLayout(&C, &E, texto);
+                    sleep(3);
+                    ClearScreen();
+                    if(C.health <= 0)
+                        break;
+                    
+                    damage = Attack(C.attack, E.defense, D20(1));
+                    E.health -= damage;
+                    sprintf (texto, "You've attacked the %s, %d damage caused", E.type, damage);
+                    BattleLayout(&C, &E, texto);
+                    sleep(3);
+                }
                 break;
             case '2':
-                strcpy(texto, "You've defended yourself");
+                IncreaseDefense(&C);
+                sprintf (texto, "Your defense has increased");
                 BattleLayout(&C, &E, texto);
-                break;
-            case '3':
-                strcpy(texto, "You've run away");
-                BattleLayout(&C, &E, texto);
+                sleep(3);
+                ClearScreen();
                 break;
             default:
                 strcpy(texto, "Not a valid option");
@@ -248,6 +362,10 @@ int main(void) {
         }
         PauseScreen();
     }while(C.health > 0 && E.health > 0);
+
+    strcpy(texto, "You won the battle");
+    BattleLayout(&C, &E, texto);
+    sleep(5);
 
 
     return 0;
