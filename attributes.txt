@@ -5,7 +5,7 @@ Health – The number of health points (HP).
 Stamina – The amount of stamina points for physical abilities.
 Attack – The attack value, used to calculate physical damage.
 Defense – The defense value, used to reduce incoming damage.
-Speed – Influences who attacks first and the chance to dodge.
+Dexterity – Influences who attacks first and stealth.
 
 // ATTRIBUTE LIMITS
 Name: 20 characters
@@ -15,3 +15,4 @@ Stamina: 100
 Attack: 100
 Defense: 100
 Speed: 100
+Stealth: 100

@@ -20,8 +20,9 @@ do paradigma imperativo procedural se encontra no codigo.
 #include<stdlib.h>
 #include<conio.h>
 #include<ctype.h>
-#include<unistd.h>
+#include<string.h>
 #include<time.h>
+#include<unistd.h>
 
 // CODE STRUCTURES
 
@@ -35,7 +36,7 @@ typedef struct Character{
     int stamina;           
     int attack;              
     int defense;            
-    int speed;    
+    int dexterity; 
 } Character;
 
 typedef struct Enemy {
@@ -47,10 +48,10 @@ typedef struct Enemy {
     int stamina;           
     int attack;              
     int defense;            
-    int speed;
+    int dexterity;
 } Enemy;
 // --------------------------------------------------------------
-// VISUAL FUNCTIONS PREVIEW
+// VISUAL FUNCTIONS
 
 void NameScreen(void);
 void Menu(void);
@@ -59,25 +60,33 @@ void KMS(void);
 void SMS(void);
 void AMS(void);
 void BattleLayout(Character* P, Enemy* E, char *texto);
+void BattleLayout (Character* P, Enemy* E, char *texto);
 void ClearScreen(void);
 void PauseScreen(void);
 // --------------------------------------------------------------
-// USUAL FUNCTIONS PREVIEW
+// CHARACTER FUNCTIONS
 
 void Knight(Character* P);
 void Assassin(Character* P);
 void Archer(Character* P);
 // --------------------------------------------------------------
-// ENEMY FUNCTIONS PREVIEW
+// ENEMY FUNCTIONS
 
 void Looter(Enemy *E);
 void Hunter(Enemy *E);
 void Murder(Enemy *E);
 // --------------------------------------------------------------
-// COMBAT FUNCTIONS PREVIEW
+// COMBAT FUNCTIONS
 
-//void BattleLayout(Character* P, Enemy* E);
-int Dice(int max);
+int Surprise(int Dice, int PlayerDexterity, int EnemyDexterity);
+int Initiative(int PlayerDexterity, int EnemyDexterity);
+int Attack(int AttackerPoints, int DefensorPoints, int Dice);
+void IncreaseDefense(Character *P);
+void LowerDefense(Enemy *E);
+// --------------------------------------------------------------
+// AUXILIAR FUNCTIONS
+
+int D20(int i);
 
 // --------------------------------------------------------------
 
@@ -266,7 +275,7 @@ void MainScreen(void) {
     printf("| Stamina                     35 | Stamina                     50 | Stamina                     50 |\n" );
     printf("| Attack                      50 | Attack                      80 | Attack                      50 |\n" );
     printf("| Defense                     80 | Defense                     35 | Defense                     20 |\n" );
-    printf("| Speed                       20 | Speed                       65 | Speed                       80 |\n" );
+    printf("| Dexterity                   20 | Dexterity                   65 | Dexterity                   80 |\n" );
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
 }
@@ -279,7 +288,7 @@ void KMS(void) {
     printf("| Stamina                     35 | Stamina                     50 | Stamina                     50 |\n" );
     printf("| Attack                      50 | Attack                      80 | Attack                      50 |\n" );
     printf("| Defense                     80 | Defense                     35 | Defense                     20 |\n" );
-    printf("| Speed                       20 | Speed                       65 | Speed                       80 |\n" );
+    printf("| Dexterity                   20 | Dexterity                   65 | Dexterity                   80 |\n" );
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
 }
@@ -292,7 +301,7 @@ void SMS(void) {
     printf("| Stamina                     35 | Stamina                     50 | Stamina                     50 |\n" );
     printf("| Attack                      50 | Attack                      80 | Attack                      50 |\n" );
     printf("| Defense                     80 | Defense                     35 | Defense                     20 |\n" );
-    printf("| Speed                       20 | Speed                       65 | Speed                       80 |\n" );
+    printf("| Dexterity                   20 | Dexterity                   65 | Dexterity                   80 |\n" );
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
 }
@@ -305,100 +314,11 @@ void AMS(void) {
     printf("| Stamina                     35 | Stamina                     50 | Stamina                     50 |\n" );
     printf("| Attack                      50 | Attack                      80 | Attack                      50 |\n" );
     printf("| Defense                     80 | Defense                     35 | Defense                     20 |\n" );
-    printf("| Speed                       20 | Speed                       65 | Speed                       80 |\n" );
+    printf("| Dexterity                   20 | Dexterity                   65 | Dexterity                   80 |\n" );
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
 }
-
-// Clear terminal
-void ClearScreen(void) {
-    system("cls");
-}
-// Pause terminal
-void PauseScreen(void) {
-    printf("Press any key to continue...");
-    getchar();
-}
-// --------------------------------------------------------------
-// USUAL FUNCTIONS PREVIEW
-
-// Gives the knight attributes
-void Knight(Character* P) {
-    strcpy(P->body1, "   O   ");
-    strcpy(P->body2, "U/ | \\P");
-    strcpy(P->body3, "  / \\  ");
-    strcpy(P->class, "Knight");
-    P->health = 65;
-    P->stamina = 35;
-    P->attack = 50;
-    P->defense = 80;  
-    P->speed = 20;
-}
-// Gives the assassin attributes
-void Assassin(Character* P) {
-    strcpy(P->body1, "   O   ");
-    strcpy(P->body2, "i/ | \\i");
-    strcpy(P->body3, "  / \\  ");
-    strcpy(P->class, "Assassin");
-    P->health = 35;
-    P->stamina = 50;
-    P->attack = 80;
-    P->defense = 35;
-    P->speed = 65;
-}
-// Gives the archer attributes
-void Archer(Character* P) {
-    strcpy(P->body1, "   O   ");
-    strcpy(P->body2, "|/ | \\D");
-    strcpy(P->body3, "  / \\  ");
-    strcpy(P->class, "Archer");
-    P->health = 35;
-    P->stamina = 50;
-    P->attack = 50;
-    P->defense = 20;
-    P->speed = 80;
-}
-
-// --------------------------------------------------------------
-// ENEMY FUNCTIONS PREVIEW
-
-// Gives the Looter attributes
-void Looter(Enemy *E) {
-    strcpy(E->body1, "   O   ");
-    strcpy(E->body2, " / | \\i");
-    strcpy(E->body3, "  / \\  ");
-    strcpy(E->type,"Looter");
-    E->health = 33;
-    E->stamina = 60;
-    E->attack = 45;
-    E->defense = 18;
-    E->speed = 72;
-}
-// Gives the Hunter attributes
-void Hunter(Enemy *E) {
-    strcpy(E->body1, "   O   ");
-    strcpy(E->body2, " / | \\D");
-    strcpy(E->body3, "  / \\  ");
-    strcpy(E->type,"Hunter");
-    E->health = 45;
-    E->stamina = 60;
-    E->attack = 45;
-    E->defense = 33;
-    E->speed = 60;
-}
-// Gives the Murder attributes
-void Murder(Enemy *E) {
-    strcpy(E->body1, "   O   ");
-    strcpy(E->body2, "l/ | \\l");
-    strcpy(E->body3, "  / \\  ");
-    strcpy(E->type,"Murder");
-    E->health = 60;
-    E->stamina = 33;
-    E->attack = 60;
-    E->defense = 45;
-    E->speed = 45;
-}
-
+//Battle Layout
 void BattleLayout (Character* P, Enemy* E, char *texto) {
     printf("                                Combat                                \n");
     printf("| %-8s                        VS                       %8s |\n", P->class, E->type);
@@ -416,12 +336,132 @@ void BattleLayout (Character* P, Enemy* E, char *texto) {
     printf("|                                                                   |\n");
     printf("|-------------------------------------------------------------------|\n" );
 }
+// Clear terminal
+void ClearScreen(void) {
+    system("cls");
+}
+// Pause terminal
+void PauseScreen(void) {
+    printf("Press any key to continue...");
+    getchar();
+}
+// --------------------------------------------------------------
+// CHARACTER FUNCTIONS PREVIEW
 
-// Returns a value (min <= value <= max)
-int Dice(int max) {
-    int random_number;
-    // Starts the seed using the clock
-    srand(time(NULL));
-    return random_number = rand() % (max + 1);
+// Gives the knight attributes
+void Knight(Character *P) {
+    strcpy(P->body1, "   O   ");
+    strcpy(P->body2, "U/ | \\P");
+    strcpy(P->body3, "  / \\  ");
+    strcpy(P->class, "Knight");
+    P->health = 100;
+    P->stamina = 35;
+    P->attack = 50;
+    P->defense = 80;  
+    P->dexterity = 20;
+}
+// Gives the assassin attributes
+void Assassin(Character *P) {
+    strcpy(P->body1, "   O   ");
+    strcpy(P->body2, "i/ | \\i");
+    strcpy(P->body3, "  / \\  ");
+    strcpy(P->class, "Assassin");
+    P->health = 100;
+    P->stamina = 50;
+    P->attack = 80;
+    P->defense = 35;
+    P->dexterity = 65;
+}
+// Gives the archer attributes
+void Archer(Character *P) {
+    strcpy(P->body1, "   O   ");
+    strcpy(P->body2, "|/ | \\D");
+    strcpy(P->body3, "  / \\  ");
+    strcpy(P->class, "Archer");
+    P->health = 100;
+    P->stamina = 50;
+    P->attack = 50;
+    P->defense = 20;
+    P->dexterity = 80;
 }
 
+// --------------------------------------------------------------
+// ENEMY FUNCTIONS PREVIEW
+
+// Gives the Looter attributes
+void Looter(Enemy *E) {
+    strcpy(E->body1, "   O   ");
+    strcpy(E->body2, " / | \\i");
+    strcpy(E->body3, "  / \\  ");
+    strcpy(E->type,"Looter");
+    E->health = 100;
+    E->stamina = 60;
+    E->attack = 45;
+    E->defense = 18;
+    E->dexterity = 72;
+}
+// Gives the Hunter attributes
+void Hunter(Enemy *E) {
+    strcpy(E->body1, "   O   ");
+    strcpy(E->body2, " / | \\D");
+    strcpy(E->body3, "  / \\  ");
+    strcpy(E->type,"Hunter");
+    E->health = 100;
+    E->stamina = 60;
+    E->attack = 45;
+    E->defense = 33;
+    E->dexterity = 60;
+}
+// Gives the Murder attributes
+void Murder(Enemy *E) {
+    strcpy(E->body1, "   O   ");
+    strcpy(E->body2, "l/ | \\l");
+    strcpy(E->body3, "  / \\  ");
+    strcpy(E->type,"Murder");
+    E->health = 100;
+    E->stamina = 33;
+    E->attack = 60;
+    E->defense = 45;
+    E->dexterity = 45;
+}
+// --------------------------------------------------------------
+// COMBAT FUNCTIONS PREVIEW
+
+// Returns if enemy was caught by surprise (0/1)
+// First attack before battle
+int Surprise(int Dice, int PlayerDexterity, int EnemyDexterity) {
+    return (Dice >= 15 && PlayerDexterity >= EnemyDexterity);
+}
+// Returns if player attacks first
+// Determines the order of turns during combat
+int Initiative(int PlayerDexterity, int EnemyDexterity) {
+    return (PlayerDexterity >= EnemyDexterity);
+}
+// Returns the damage caused by the attack
+int Attack(int AttackerPoints, int DefensorPoints, int Dice) {
+    int Damage = (AttackerPoints * (Dice/20.0)) - (AttackerPoints * (DefensorPoints/100.0));
+
+    if(Damage > 0)
+        return Damage;
+    else
+        return 0;
+}
+// Increase the defense of the attacker
+void IncreaseDefense(Character *P) {
+    P->defense += 10;
+}
+// Decrease the defense of the enemy 
+void LowerDefense(Enemy *E) {
+    E->defense -= 10;
+}
+// --------------------------------------------------------------
+// AUXILIAR FUNCTIONS PREVIEW
+
+// Returns a value positive for the amount of results of the dice
+int D20(int i) {
+    int random_number;
+    // Starts the seed using the clock
+    srand(time(NULL)+i);
+    random_number = rand() % 21;
+    return random_number;
+}
