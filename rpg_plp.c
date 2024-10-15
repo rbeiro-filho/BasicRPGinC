@@ -24,8 +24,7 @@ do paradigma imperativo procedural se encontra no codigo.
 #include<time.h>
 #include<unistd.h>
 
-// CODE STRUCTURES
-
+// Definição de estruturas de dados, utilizadas para armazenar o estado do jogo.
 typedef struct Character{
     char name[20];
     char body1[20];
@@ -50,8 +49,8 @@ typedef struct Enemy {
     int defense;            
     int dexterity;
 } Enemy;
-// --------------------------------------------------------------
-// VISUAL FUNCTIONS
+
+// Procedimentos: as funções são definidas aqui para realizar ações específicas no programa.
 
 void NameScreen(void);
 void Menu(void);
@@ -63,44 +62,38 @@ void BattleLayout(Character* P, Enemy* E, char *texto);
 void BattleLayout (Character* P, Enemy* E, char *texto);
 void ClearScreen(void);
 void PauseScreen(void);
-// --------------------------------------------------------------
-// CHARACTER FUNCTIONS
 
+// Funções para modificar o estado dos personagens e inimigos.
 void Knight(Character* P);
 void Assassin(Character* P);
 void Archer(Character* P);
-// --------------------------------------------------------------
-// ENEMY FUNCTIONS
+
 
 void Looter(Enemy *E);
 void Hunter(Enemy *E);
 void Murder(Enemy *E);
-// --------------------------------------------------------------
-// COMBAT FUNCTIONS
 
 int Surprise(int Dice, int PlayerDexterity, int EnemyDexterity);
 int Initiative(int PlayerDexterity, int EnemyDexterity);
 int Attack(int AttackerPoints, int DefensorPoints, int Dice);
 void IncreaseDefense(Character *P);
 void LowerDefense(Enemy *E);
-// --------------------------------------------------------------
-// AUXILIAR FUNCTIONS
 
 int D20(int i);
 
-
-// --------------------------------------------------------------
+//-----------------------------------------------------------
 
 int main(void) {
+    // Mudança de estado: a variável 'control' e 'select' são usadas para controlar o estado do jogo.
+    start:
     ClearScreen();
     int control = 0;
     char select = 'Z';
     Character C;
     system("chcp 65001 > nul");
 
-    
 
-    // Choose the player name
+    // Controle de fluxo: a estrutura 'do-while' controla a execução repetitiva até que o jogador confirme.
     do{
         NameScreen();
         scanf(" %19[^\n]", C.name);
@@ -108,21 +101,24 @@ int main(void) {
         select = toupper(getch()); fflush(stdin);
         ClearScreen();
     }while(select != 'Y');
-    // Entering Forgotten Land
+
+    // Procedimentos: chamada de função para exibir o menu do jogo.
     Menu();
     sleep(5);
-    // Class selection
+    
+    // Controle de fluxo: a estrutura 'do-while' controla a execução repetitiva até que o jogador escolha uma classe.
     do{
         ClearScreen();
         MainScreen();
         select = getch(); fflush(stdin);
         ClearScreen();
+        // Controle de fluxo: a estrutura 'switch' controla a execução do programa de acordo com a escolha do jogador.
         switch(toupper(select)){
             case 'K':
-                Knight(&C);
+                Knight(&C); // Mudança de estado: a função 'Knight' é chamada para modificar o estado do personagem.
                 KMS();
                 printf("\n\t\t\t\t\tYou've choosen Knight\n");
-                control = 1;
+                control = 1; // Mudança de estado: a variável 'control' é alterada para 1 para sair do loop.
                 break;
             case 'S':
                 Assassin(&C);
@@ -143,10 +139,9 @@ int main(void) {
         PauseScreen();
     }while(control != 1);
 
-    // Battle Looters
+    // Mudança de estado: inicialização de variáveis para o combate.
     char texto[50];
     Enemy E;
-
     ClearScreen();
     Looter(&E);
     strcpy(texto, "You've found a Looter");
@@ -156,18 +151,20 @@ int main(void) {
     char action[100] = "1- Attack                                                  2- Defend\n";
     int damage;
         
-    
+    // Controle de fluxo: a estrutura 'do-while' controla a execução repetitiva do combate.
     do{
         ClearScreen();
         strcpy(texto, "Choose your action");
-        BattleLayout(&C, &E, texto);
+        BattleLayout(&C, &E, texto); // Procedimentos: chamada de função para exibir o layout do combate.
         printf("%s\n", action);
 
         select = getch(); fflush(stdin);
-
+        ClearScreen();
         switch(select){
             case '1':
-                if(Initiative(C.dexterity, E.dexterity)){
+            // Controle de fluxo: a estrutura 'if-else' controla a execução do combate de acordo com a iniciativa.
+                if(Initiative(C.dexterity, E.dexterity)){ 
+                    // Mudança de estado: a função 'Attack' é chamada para calcular o dano causado.
                     damage = Attack(C.attack, E.defense, D20(1));
                     E.health -= damage;
                     sprintf (texto, "You've attacked the %s, %d damage caused", E.type, damage);
@@ -206,27 +203,33 @@ int main(void) {
                 BattleLayout(&C, &E, texto);
                 sleep(3);
                 ClearScreen();
-
                 damage = Attack(E.attack, C.defense, D20(2));
                 C.health -= damage;
                 sprintf (texto, "The %s attacked you, %d damage caused", E.type, damage);
                 BattleLayout(&C, &E, texto);
                 sleep(3);
-                ClearScreen();
+
                 break;
             default:
                 strcpy(texto, "Not a valid option");
                 BattleLayout(&C, &E, texto);
                 break;
         }
-
+        PauseScreen();
     }while(C.health > 0 && E.health > 0);
 
-    strcpy(texto, "You won the battle");
-    BattleLayout(&C, &E, texto);
-    sleep(5);
+    if(C.health <= 0){
+        strcpy(texto, "You lost the battle");
+        BattleLayout(&C, &E, texto);
+        sleep(5);
+        goto start;
+    }else{
+        strcpy(texto, "You won the battle");
+        BattleLayout(&C, &E, texto);
+        sleep(5);
+    }
 
-    // Battle Hunter
+
     ClearScreen();
     Hunter(&E);
     strcpy(texto, "You've found a Hunter");
@@ -239,6 +242,7 @@ int main(void) {
         BattleLayout(&C, &E, texto);
         printf("%s\n", action);
         select = getch(); fflush(stdin);
+        ClearScreen();
         switch(select){
             case '1':
                 if(Initiative(C.dexterity, E.dexterity)){
@@ -285,7 +289,7 @@ int main(void) {
                 sprintf (texto, "The %s attacked you, %d damage caused", E.type, damage);
                 BattleLayout(&C, &E, texto);
                 sleep(3);
-                ClearScreen();
+
                 break;
 
             default:
@@ -297,23 +301,30 @@ int main(void) {
 
     }while(C.health > 0 && E.health > 0);
 
-    strcpy(texto, "You won the battle");
-    BattleLayout(&C, &E, texto);
-    sleep(5);
+    if(C.health <= 0){
+        strcpy(texto, "You lost the battle");
+        BattleLayout(&C, &E, texto);
+        sleep(5);
+        goto start;
+    }else{
+        strcpy(texto, "You won the battle");
+        BattleLayout(&C, &E, texto);
+        sleep(5);
+    }
 
-    // Battle Murder
+    test:
     ClearScreen();
     Murder(&E);
-    strcpy(texto, "You've found a Hunter");
+    strcpy(texto, "You've found a Murder");
     BattleLayout(&C, &E, texto);
     sleep(5);
-
     do{
         ClearScreen();
         strcpy(texto, "Choose your action");
         BattleLayout(&C, &E, texto);
         printf("%s\n", action);
         select = getch(); fflush(stdin);
+        ClearScreen();
         switch(select){
             case '1':
                 if(Initiative(C.dexterity, E.dexterity)){
@@ -354,6 +365,12 @@ int main(void) {
                 BattleLayout(&C, &E, texto);
                 sleep(3);
                 ClearScreen();
+
+                damage = Attack(E.attack, C.defense, D20(2));
+                C.health -= damage;
+                sprintf (texto, "The %s attacked you, %d damage caused", E.type, damage);
+                BattleLayout(&C, &E, texto);
+                sleep(3);
                 break;
             default:
                 strcpy(texto, "Not a valid option");
@@ -363,28 +380,42 @@ int main(void) {
         PauseScreen();
     }while(C.health > 0 && E.health > 0);
 
+    if(C.health <= 0){
+        strcpy(texto, "You lost the battle");
+        BattleLayout(&C, &E, texto);
+        sleep(5);
+        goto start;
+    }else{
+        printf("\n\t\t\t\t\t\tYou've won the game\n");
+        sleep(5);
+    }
+
+
+
+
+    
+
+
     strcpy(texto, "You won the battle");
     BattleLayout(&C, &E, texto);
     sleep(5);
 
 
+
     return 0;
 }
-// --------------------------------------------------------------
-// VISUAL FUNCTIONS PREVIEW
 
-// Name screen
 void NameScreen(void) {
     printf("\t\t\t\t\t\tYou bastard!!!\n");
     printf("\t\t\tYou must identify yourself before you entering this land\n\n\t\t\t\t\t\t");
 }
-// Game menu
+
 void Menu(void) {
     printf("\t\t\t\t\tWelcome to Forgotten Land\n\n");
     printf("\t\t\t\t   The fate of this land depends on you\n");
     printf("\t\t\t\t    We wish you lucky! You'll need it!\n");
 }
-// Prints the home screen
+
 void MainScreen(void) {
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Knight               0         | Assassin             0         | Archer               0         |\n" );
@@ -397,7 +428,7 @@ void MainScreen(void) {
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
 }
-// Prints the Knight choosen home screen 
+
 void KMS(void) {
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Knight               0 /P      | Assassin             0         | Archer               0         |\n" );
@@ -410,7 +441,7 @@ void KMS(void) {
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
 }
-// Prints the Assassin choosen home screen
+
 void SMS(void) {
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Knight               0         | Assassin             0 /i      | Archer               0         |\n" );
@@ -423,7 +454,7 @@ void SMS(void) {
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
 }
-// Prints the Archer choosen home screen
+
 void AMS(void) {
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Knight               0         | Assassin             0         | Archer               0 /D      |\n" );
@@ -436,7 +467,7 @@ void AMS(void) {
     printf("|--------------------------------|--------------------------------|--------------------------------|\n" );
     printf("| Type K to choose Knight        | Type S to choose Assassin      | Type A to choose Archer        |\n" );
 }
-//Battle Layout
+
 void BattleLayout (Character* P, Enemy* E, char *texto) {
     printf("                                Combat                                \n");
     printf("| %-8s                        VS                       %8s |\n", P->class, E->type);
@@ -454,19 +485,16 @@ void BattleLayout (Character* P, Enemy* E, char *texto) {
     printf("|                                                                   |\n");
     printf("|-------------------------------------------------------------------|\n" );
 }
-// Clear terminal
+
 void ClearScreen(void) {
     system("cls");
 }
-// Pause terminal
+
 void PauseScreen(void) {
     printf("Press any key to continue...");
     getchar();
 }
-// --------------------------------------------------------------
-// CHARACTER FUNCTIONS PREVIEW
 
-// Gives the knight attributes
 void Knight(Character *P) {
     strcpy(P->body1, "   O   ");
     strcpy(P->body2, "U/ | \\P");
@@ -478,7 +506,7 @@ void Knight(Character *P) {
     P->defense = 80;  
     P->dexterity = 20;
 }
-// Gives the assassin attributes
+
 void Assassin(Character *P) {
     strcpy(P->body1, "   O   ");
     strcpy(P->body2, "i/ | \\i");
@@ -490,7 +518,7 @@ void Assassin(Character *P) {
     P->defense = 35;
     P->dexterity = 65;
 }
-// Gives the archer attributes
+
 void Archer(Character *P) {
     strcpy(P->body1, "   O   ");
     strcpy(P->body2, "|/ | \\D");
@@ -503,10 +531,7 @@ void Archer(Character *P) {
     P->dexterity = 80;
 }
 
-// --------------------------------------------------------------
-// ENEMY FUNCTIONS PREVIEW
 
-// Gives the Looter attributes
 void Looter(Enemy *E) {
     strcpy(E->body1, "   O   ");
     strcpy(E->body2, " / | \\i");
@@ -518,7 +543,7 @@ void Looter(Enemy *E) {
     E->defense = 18;
     E->dexterity = 72;
 }
-// Gives the Hunter attributes
+
 void Hunter(Enemy *E) {
     strcpy(E->body1, "   O   ");
     strcpy(E->body2, " / | \\D");
@@ -530,7 +555,7 @@ void Hunter(Enemy *E) {
     E->defense = 33;
     E->dexterity = 60;
 }
-// Gives the Murder attributes
+
 void Murder(Enemy *E) {
     strcpy(E->body1, "   O   ");
     strcpy(E->body2, "l/ | \\l");
@@ -542,43 +567,35 @@ void Murder(Enemy *E) {
     E->defense = 45;
     E->dexterity = 45;
 }
-// --------------------------------------------------------------
-// COMBAT FUNCTIONS PREVIEW
 
-// Returns if enemy was caught by surprise (0/1)
-// First attack before battle
 int Surprise(int Dice, int PlayerDexterity, int EnemyDexterity) {
     return (Dice >= 15 && PlayerDexterity >= EnemyDexterity);
 }
-// Returns if player attacks first
-// Determines the order of turns during combat
+
 int Initiative(int PlayerDexterity, int EnemyDexterity) {
     return (PlayerDexterity >= EnemyDexterity);
 }
-// Returns the damage caused by the attack
+
 int Attack(int AttackerPoints, int DefensorPoints, int Dice) {
     int Damage = (AttackerPoints * (Dice/20.0)) - (AttackerPoints * (DefensorPoints/100.0));
 
     if(Damage > 0)
         return Damage;
     else
-        return 0;
+        return 1;
 }
-// Increase the defense of the attacker
+
 void IncreaseDefense(Character *P) {
     P->defense += 10;
 }
-// Decrease the defense of the enemy 
+
 void LowerDefense(Enemy *E) {
     E->defense -= 10;
 }
-// --------------------------------------------------------------
-// AUXILIAR FUNCTIONS PREVIEW
 
-// Returns a value positive for the amount of results of the dice
 int D20(int i) {
     int random_number;
-    // Starts the seed using the clock
+
     srand(time(NULL)+i);
     random_number = rand() % 21;
     return random_number;
