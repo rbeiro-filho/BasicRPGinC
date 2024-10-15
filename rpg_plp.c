@@ -1,3 +1,21 @@
+/*
+O Paradigma Imperativo Procedural é um paradigma de programação que se 
+baseia na execução de comandos sequenciais, que são executados
+um após o outro. O programa é composto por funções que são chamadas
+em sequência, e cada função é composta por comandos que são executados
+em sequência. 
+
+As principais características do paradigma imperativo procedural são:
+
+Procedimentos: o programa é composto por funções que são chamadas em sequência.
+Controla o fluxo de execução: o programador controla o fluxo de execução do programa.
+Mudança de estado: o programa altera o estado dos dados conforme as instruções são executadas.
+
+Neste codigo, com o meio de comentarios, iremos monstrar onde cada uma das caracteristicas
+do paradigma imperativo procedural se encontra no codigo.
+
+*/
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<conio.h>
@@ -68,12 +86,6 @@ int main(void) {
     char select = 'Z';
     Character C;
     system("chcp 65001 > nul");
-    Knight(&C);
-    Enemy E;
-    Looter(&E);
-    char texto[100] = "A wild looter appears";
-    BattleLayout(&C, &E, texto);
-    PauseScreen();
 
     
 
@@ -121,11 +133,111 @@ int main(void) {
     }while(control != 1);
 
     // Battle Looters
+    char texto[50];
+    Enemy E;
+
+    ClearScreen();
+    Looter(&E);
+    strcpy(texto, "You've found a Looter");
+    BattleLayout(&C, &E, texto);
+    sleep(5);
+    
     do{
         ClearScreen();
+        strcpy(texto, "Choose your action");
         BattleLayout(&C, &E, texto);
+        printf("1- Attack                     2- Defend                      3- Run\n");
+        select = getch(); fflush(stdin);
+        switch(select){
+            case '1':
+                strcpy(texto, "You've attacked the Looter");
+                
+                BattleLayout(&C, &E, texto);
+                break;
+            case '2':
+                strcpy(texto, "You've defended yourself");
+                BattleLayout(&C, &E, texto);
+                break;
+            case '3':
+                strcpy(texto, "You've run away");
+                BattleLayout(&C, &E, texto);
+                break;
+            default:
+                strcpy(texto, "Not a valid option");
+                BattleLayout(&C, &E, texto);
+                break;
+        }
+        PauseScreen();
 
+    }while(C.health > 0 && E.health > 0);
 
+    // Battle Hunter
+    ClearScreen();
+    Hunter(&E);
+    strcpy(texto, "You've found a Hunter");
+    BattleLayout(&C, &E, texto);
+    sleep(5);
+
+    do{
+        ClearScreen();
+        strcpy(texto, "Choose your action");
+        BattleLayout(&C, &E, texto);
+        printf("1- Attack                     2- Defend                      3- Run\n");
+        select = getch(); fflush(stdin);
+        switch(select){
+            case '1':
+                strcpy(texto, "You've attacked the Hunter");
+                BattleLayout(&C, &E, texto);
+                break;
+            case '2':
+                strcpy(texto, "You've defended yourself");
+                BattleLayout(&C, &E, texto);
+                break;
+            case '3':
+                strcpy(texto, "You've run away");
+                BattleLayout(&C, &E, texto);
+                break;
+            default:
+                strcpy(texto, "Not a valid option");
+                BattleLayout(&C, &E, texto);
+                break;
+        }
+        PauseScreen();
+
+    }while(C.health > 0 && E.health > 0);
+
+    // Battle Murder
+    ClearScreen();
+    Murder(&E);
+    strcpy(texto, "You've found a Hunter");
+    BattleLayout(&C, &E, texto);
+    sleep(5);
+
+    do{
+        ClearScreen();
+        strcpy(texto, "Choose your action");
+        BattleLayout(&C, &E, texto);
+        printf("1- Attack                     2- Defend                      3- Run\n");
+        select = getch(); fflush(stdin);
+        switch(select){
+            case '1':
+                strcpy(texto, "You've attacked the Hunter");
+                BattleLayout(&C, &E, texto);
+                break;
+            case '2':
+                strcpy(texto, "You've defended yourself");
+                BattleLayout(&C, &E, texto);
+                break;
+            case '3':
+                strcpy(texto, "You've run away");
+                BattleLayout(&C, &E, texto);
+                break;
+            default:
+                strcpy(texto, "Not a valid option");
+                BattleLayout(&C, &E, texto);
+                break;
+        }
+        PauseScreen();
     }while(C.health > 0 && E.health > 0);
 
 
