@@ -312,7 +312,6 @@ int main(void) {
         sleep(5);
     }
 
-    test:
     ClearScreen();
     Murder(&E);
     strcpy(texto, "You've found a Murder");
@@ -503,7 +502,7 @@ void Knight(Character *P) {
     P->health = 100;
     P->stamina = 35;
     P->attack = 50;
-    P->defense = 80;  
+    P->defense = 50;  
     P->dexterity = 20;
 }
 
